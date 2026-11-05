@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d1117">
+<link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1><span id="co-name">Financial dashboard</span> <span class="muted" id="co-tick"></span></h1>
+      <div class="muted small" id="subtitle">Load an Excel file with the three statements to begin</div>
+    </div>
+    <div class="controls">
+      <div class="top-price" id="top-price"></div>
+      <select id="ticker" title="Company whose share price is shown"></select>
+      <label class="file-btn">Open Excel file<input type="file" id="file" accept=".xlsx,.xlsm,.xls"></label>
+    </div>
+  </header>
+  <div class="status" id="status"></div>
+
+  <section class="card welcome" id="welcome">
+    <h2>Open your financial statements</h2>
+    <p>Click <b>Open Excel file</b> and choose a workbook with the sheets <code>Income Statement</code>, <code>Balance Sheet</code> and <code>Cash Flow</code>, in the same layout as the NVIDIA file.</p>
+    <p class="muted small">The file is read in your browser. Nothing is uploaded anywhere.</p>
+  </section>
+
+  <main class="dashboard" id="dash" hidden>
+    <section class="kpi-grid" id="kpi-fin"></section>
+    <section class="kpi-grid" id="kpi-mkt"></section>
+
+    <div class="card span8">
+      <div class="card-head">
+        <div class="label">Share price (split-adjusted close)</div>
+        <div class="tabs" id="range-tabs">
+          <button data-r="21">1M</button><button data-r="126">6M</button>
+          <button data-r="252" class="on">1Y</button><button data-r="1260">5Y</button>
+        </div>
+      </div>
+      <div class="chart-box h300"><canvas id="priceChart"></canvas></div>
+      <div class="empty" id="price-empty" hidden></div>
+    </div>
+    <div class="card span4">
+      <div class="label">Price performance</div>
+      <table class="table" id="perf-table"><tbody></tbody></table>
+      <div class="empty" id="perf-empty" hidden></div>
+    </div>
+
+    <div class="card span4"><div class="label">Revenue &amp; net income (<span class="cur">$</span>B)</div><div class="chart-box h240"><canvas id="revChart"></canvas></div></div>
+    <div class="card span4"><div class="label">Margins (% of revenue)</div><div class="chart-box h240"><canvas id="marginChart"></canvas></div></div>
+    <div class="card span4"><div class="label">Revenue growth, year over year (%)</div><div class="chart-box h240"><canvas id="growthChart"></canvas></div></div>
+
+    <div class="card span4"><div class="label">(<span class="cur">$</span>B)</div><div class="chart-box h240"><canvas id="cashChart"></canvas></div></div>
+    <div class="card span4"><div class="label">(<span class="cur">$</span>B)</div><div class="chart-box h240"><canvas id="returnChart"></canvas></div></div>
+    <div class="card span4"><div class="label">(<span class="cur">$</span>B)</div><div class="chart-box h240"><canvas id="opexChart"></canvas></div></div>
+
+    <div class="card span3"><div class="label">Operating margin <span class="fy"></span></div><div class="chart-box gauge"><canvas id="g1"></canvas><div class="gauge-text" id="g1t"></div></div></div>
+    <div class="card span3"><div class="label">Free cash flow margin <span class="fy"></span></div><div class="chart-box gauge"><canvas id="g2"></canvas><div class="gauge-text" id="g2t"></div></div></div>
+    <div class="card span3"><div class="label">Return on equity <span class="fy"></span></div><div class="chart-box gauge"><canvas id="g3"></canvas><div class="gauge-text" id="g3t"></div></div></div>
+    <div class="card span3"><div class="label">(<span class="cur">$</span>B)</div><div class="chart-box gauge-tall"><canvas id="assetChart"></canvas></div></div>
+
+    <div class="card span7"><div class="label">Ratio scorecard</div><table class="table" id="ratio-table"></table></div>
+    <div class="card span5"><div class="label">(<span class="cur">$</span>M)</div><table class="table" id="income-table"></table></div>
+
+    <div class="card span4"><div class="label">(<span class="cur">$</span>B)</div><div class="chart-box h240"><canvas id="liqChart"></canvas></div></div>
+    <div class="card span4"><div class="label">Working capital efficiency (days)</div><div class="chart-box h240"><canvas id="daysChart"></canvas></div></div>
+    <div class="card span4"><div class="label">diluted (<span class="cur">$</span>)</div><div class="chart-box h240"><canvas id="epsChart"></canvas></div></div>
+  </main>
+
+  <footer class="notes small muted" id="notes"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="config.js"></script>
+  <script src="data.js"></script>
+  <script src="prices-data.js"></script>
+  <script src="script.js"></script>
+  <script>
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>
