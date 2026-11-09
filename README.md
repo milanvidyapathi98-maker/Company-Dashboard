@@ -5,7 +5,7 @@ statement** into KPIs, charts and a ratio scorecard, alongside its share price, 
 
 **Live app:** *https://milanvidyapathi98-maker.github.io/Company-Dashboard/*
 
-> Learning and portfolio project. Not investment advice.
+> AI-based learning and portfolio project. Not investment advice.
 
 \---
 
